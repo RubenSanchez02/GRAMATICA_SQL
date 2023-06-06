@@ -53,6 +53,32 @@ public class Parser {
 
         parsingTable.put("A", new HashMap<>());
         parsingTable.get("A").put(identificador, new ArrayList<>(Arrays.asList("A2", "A1")));
+        parsingTable.put("A1", new HashMap<>());
+        parsingTable.get("A1").put(coma, new ArrayList<>(Arrays.asList(coma, "A")));
+        parsingTable.get("A1").put(from, new ArrayList<>(Collections.singletonList(epsilon)));
+
+        parsingTable.put("A2", new HashMap<>());
+        parsingTable.get("A2").put(identificador, new ArrayList<>(Arrays.asList(identificador, "A3")));
+
+        parsingTable.put("A3", new HashMap<>());
+        parsingTable.get("A3").put(from, new ArrayList<>(Collections.singletonList(epsilon)));
+        parsingTable.get("A3").put(coma, new ArrayList<>(Collections.singletonList(epsilon)));
+        parsingTable.get("A3").put(punto, new ArrayList<>(Arrays.asList(punto, identificador)));
+
+        parsingTable.put("T", new HashMap<>());
+        parsingTable.get("T").put(identificador, new ArrayList<>(Arrays.asList("T2", "T1")));
+
+        parsingTable.put("T1", new HashMap<>());
+        parsingTable.get("T1").put(coma, new ArrayList<>(Arrays.asList(coma, "T")));
+        parsingTable.get("T1").put(finCadena, new ArrayList<>(Collections.singletonList(epsilon)));
+
+        parsingTable.put("T2", new HashMap<>());
+        parsingTable.get("T2").put(identificador, new ArrayList<>(Arrays.asList(identificador, "T3")));
+
+        parsingTable.put("T3", new HashMap<>());
+        parsingTable.get("T3").put(coma, new ArrayList<>(Collections.singletonList(epsilon)));
+        parsingTable.get("T3").put(identificador, new ArrayList<>(Collections.singletonList(identificador)));
+        parsingTable.get("T3").put(finCadena, new ArrayList<>(Collections.singletonList(epsilon)));
 
        
     }
