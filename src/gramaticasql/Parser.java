@@ -88,28 +88,48 @@ public class Parser {
     }
 
     public void parse(){
-            i = 0;
-            preanalisis = tokens.get(i);
-           Stack<Object> symbolStack = new Stack<>();
-            symbolStack.push(finCadena);
-            symbolStack.push("Q");
+        i = 0;
+        preanalisis = tokens.get(i);
+        Stack<Object> symbolStack = new Stack<>();
+        symbolStack.push(finCadena);
+        symbolStack.push("Q");
 
-            Object topValueStack = symbolStack.peek();
-                    while (!symbolStack.isEmpty()) {
-            if (preanalisis.equals(topValueStack)) {
-                symbolStack.pop();
-                if (++i >= tokens.size()) break;
-                preanalisis = tokens.get(i);
-            } else if (topValueStack instanceof Token) {
-                error( "Consulta no válida");
-                return;
-            } else if (getProductions(topValueStack, preanalisis) == null || getProductions(topValueStack, preanalisis).isEmpty()) {
-                error( "Consulta no válida");
-                return;
+        Object topValueStack = symbolStack.peek();
+            while (!symbolStack.isEmpty()) 
+            {
+                if (preanalisis.equals(topValueStack)) 
+                {
+                    symbolStack.pop();
+                    if (++i >= tokens.size()) break;
+                    preanalisis = tokens.get(i);
+                } 
+                else if (topValueStack instanceof Token) 
+                {
+                    error( "Consulta no válida");
+                    return;
+                } 
+                else if (getProductions(topValueStack, preanalisis) == null || getProductions(topValueStack, preanalisis).isEmpty()) 
+                {
+                    error( "Consulta no válida");
+                    return;
+                 }
+                else
+                {
+                    List<?> productions = new ArrayList<>(getProductions(topValueStack, preanalisis));
+                    symbolStack.pop();
+                    while (!productions.isEmpty()) 
+                    {
+                        Object lastProduction = productions.get(productions.size() - 1);
+                        if (!lastProduction.equals(epsilon)) 
+                        {
+                            symbolStack.push(lastProduction);
+                        }
+                        productions.remove(lastProduction);
+                    }
+                }
+
+                topValueStack = symbolStack.peek();
             }
-
-            topValueStack = symbolStack.peek();
-        }
         System.out.println("Consulta válida");
     }
 
